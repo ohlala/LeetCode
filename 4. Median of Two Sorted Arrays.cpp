@@ -8,7 +8,6 @@
 
 
 using namespace std;
-
 class Solution {
 public:
 	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
@@ -20,43 +19,10 @@ public:
 		if (nums1.size() == 1 && nums2.size() == 1)
 			return (nums1.at(0) + nums2.at(0)) / 2.0;
 		int total = nums1.size() + nums2.size();
-		int i = 0, j = 0, mid = 0, mid2 = 0, index = 0;
-		int flag=0;
-		for (int count = 0; count < total / 2 + 1; count++) {
-			if (i<nums1.size() && nums1.at(i) <= nums2.at(j)) {
-				mid = nums1.at(i);
-				index = i;
-				i++;
-				if (i == nums1.size() && flag == 1) {
-					mid = nums2.at(j);
-					j++;
-					i--;
-				}
-				if (i == nums1.size() && flag == 0) {
-					i--;
-					flag = 1;
-				}
-			}
-			else {
-				mid = nums2.at(j);
-				index = j;
-				j++;
-				if (j == nums2.size() && flag == 1) {
-					mid = nums1.at(i);
-					i++;
-					j--;
-				}
-				if (j == nums2.size()&&flag==0) {
-					j--;
-					flag = 1;
-				}
-			}
-		}
-		i = 0, j = 0,flag=0;
+		int i = 0, j = 0, mid = 0, mid2 = 0, flag=0;
 		for (int count = 0; count < total / 2; count++) {
 			if (i<nums1.size() && nums1.at(i) <= nums2.at(j)) {
 				mid2 = nums1.at(i);
-				index = i;
 				i++;
 				if (i == nums1.size() && flag == 1) {
 					mid2 = nums2.at(j);
@@ -70,7 +36,6 @@ public:
 			}
 			else {
 				mid2 = nums2.at(j);
-				index = j;
 				j++;
 				if (j == nums2.size() && flag == 1) {
 					mid2 = nums1.at(i);
@@ -78,6 +43,34 @@ public:
 					j--;
 				}
 				if (j == nums2.size() && flag == 0) {
+					j--;
+					flag = 1;
+				}
+			}
+		}
+        {
+			if (i<nums1.size() && nums1.at(i) <= nums2.at(j)) {
+				mid = nums1.at(i);
+				i++;
+				if (i == nums1.size() && flag == 1) {
+					mid = nums2.at(j);
+					j++;
+					i--;
+				}
+				if (i == nums1.size() && flag == 0) {
+					i--;
+					flag = 1;
+				}
+			}
+			else {
+				mid = nums2.at(j);
+				j++;
+				if (j == nums2.size() && flag == 1) {
+					mid = nums1.at(i);
+					i++;
+					j--;
+				}
+				if (j == nums2.size()&&flag==0) {
 					j--;
 					flag = 1;
 				}
