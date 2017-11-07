@@ -7,21 +7,26 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         int maxLength = 0, thisLength = 1;
-		for (int i = 0; i <s.length(); i++) {
+		for (int i = 0; i <s.length(); i++) {  //空串不会进入循环 直接返回0 
 			thisLength = 1;
-			if (thisLength > maxLength)
+			if (thisLength > maxLength)		//解决全为同一字符的情况 
 				maxLength = thisLength;
-			for (int j = i+1;j<s.length();j++){
+			for (int j = i+1;j<s.length();j++){ 
 				int flag = 0;
+				
 				for (int k = i;k<j;k++){
-					if (s[j] == s[k])
-						flag = 1;
+					if (s[j] == s[k]){
+						flag = 1; 			//建立标志退出外循环 
+						break;
+					}
 				}
+				
 				if(flag != 1){
 					thisLength++;
 					if (thisLength > maxLength)
 							maxLength = thisLength;
 				}else{
+					i = j; 
 					break;
 				}
 			}
