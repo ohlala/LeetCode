@@ -12,34 +12,37 @@ public class TreeNode {
 }
 */
 public class Solution {
-    String Serialize(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-        if (root == null) {
-       			sb.append("#,");
-       			return sb.toString();
-       	}
-       	sb.append(root.val + ",");
-       	Serialize(root.left);
-       	Serialize(root.right);
-       	return sb.toString();
-  	}
     
+    StringBuilder sb = new StringBuilder();
+    int index = -1;								 //用类变量记录堆栈相关信息
+    String Serialize(TreeNode root) {
+        if (root == null) {
+            sb.append("#,");
+            return sb.toString();
+        }
+        sb.append(root.val + ",");
+        Serialize(root.left);
+        Serialize(root.right);
+        return sb.toString();
+    }
+
     TreeNode Deserialize(String str) {
-       String[] strr = str.split(",");
-       if (strr[0] == "#")
-       		return null;
-       return Deserialize(strr, 0);
-   	}
-   	
-   	TreeNode Deserialize(String[] str, int index) {
-				if (index >= str.length)
-						return null;
-				TreeNode root = null;			
-				if (str[index] != "#"){
-						root = new TreeNode(Integer.valueOf(str[index]));
-						root.left = Deserialize(str, index++);
-						root.right = Deserialize(str, index++);
-				}
-				return root;   
-   	}
+        String[] strr = str.split(",");   // 结果是字符串数组
+        if (strr[0] == "#")
+            return null;
+        return Deserialize(strr);
+    }
+
+    TreeNode Deserialize(String[] str) {
+        index ++;
+        if (index >= str.length)
+            return null;
+        TreeNode root = null;
+        if (!(str[index].equals("#"))){  //字符串的比较应该用equals 不能用==
+            root = new TreeNode(Integer.valueOf(str[index]));
+            root.left = Deserialize(str);
+            root.right = Deserialize(str);
+        }
+        return root;
+    }
 }
